@@ -8,40 +8,7 @@
 - hosts: vu-find
   strategy: debug
   gather_facts: false
-  tasks:
-  - name: Install curl
-    raw: apt-get update && apt-get -y install curl
-  - name: Install python
-    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-  - name: Setup php PPA
-    apt_repository:
-      repo: 'ppa:ondrej/php'
-      state: present
-  - name: Install php
-    apt: 
-      name: '{{ item }}'
-      state: installed
-    with_items:
-      - php5.6
-      - php5.6-xml
-      - php5.6-intl
-      - php5.6-json
-      - php5.6-mysql
-      - php5.6-mbstring
-      - php5.6-dev
-  - name: Install pecl packages
-    pear:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - HTTP_Request2
-      - pecl/mongo
-  - name: Install git
-    apt:
-      name: git
-      state: installed
-  - name: RecordManager code should exist
-    git:
-      repo: https://github.com/NatLibFi/RecordManager.git
-      dest: /usr/local/RecordManager/
-  
+  roles: 
+    - recordmanager
+    - vu-find
+    - mysql-server

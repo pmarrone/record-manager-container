@@ -1,0 +1,61 @@
+#Record Manager installation tasks
+---
+- name: Install curl
+  raw: apt-get update && apt-get -y install curl
+- name: Install python
+  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+- name: Setup php PPA
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+    state: present
+- name: Install php
+  apt: 
+    name: php5.6
+    state: installed
+- name: Install php modules
+  apt: 
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - php5.6-xml
+    - php5.6-intl
+    - php5.6-json
+    - php5.6-mysql
+    - php5.6-mbstring
+    - php5.6-dev
+- name: install composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  args:
+    creates: /usr/local/bin/composer
+- name: Install pecl packages
+  pear:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - HTTP_Request2
+    - pecl/mongo
+- name: Copy mongo php ini file
+  template:
+    src: mongo.ini
+    dest: "/etc/php/5.6/cli/conf.d/30-mongo.ini" 
+  
+- name: Install git
+  apt:
+    name: git
+    state: installed
+- name: RecordManager code should exist
+  git:
+    repo: https://github.com/NatLibFi/RecordManager.git
+    dest: "{{ record_manager_dir }}"
+- name: RecordManager composer dependencies are present
+  composer:
+    command: install
+    working_dir: "{{ record_manager_dir }}"
+- name: datasources.ini template
+  template:
+    src: datasources.ini
+    dest: "{{ record_manager_dir }}/conf/datasources.ini"
+- name: recordmanager.ini template
+  template:
+    src: recordmanager.ini
+    dest: "{{ record_manager_dir }}/conf/recordmanager.ini"

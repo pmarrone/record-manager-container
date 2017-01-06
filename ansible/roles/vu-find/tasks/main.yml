@@ -1,0 +1,50 @@
+---
+- name: Install apache2
+  apt:
+    name: apache2
+    state: installed
+- name: enabled mod_rewrite
+  apache2_module:
+    name: rewrite
+    state: present
+  notify:
+    - restart apache2
+
+- name: RecordManager code should exist
+- name: Install pecl packages
+  pear:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - HTTP_Request2
+    - pecl/mongo
+- name: Copy mongo php ini file
+  template:
+    src: mongo.ini
+    dest: "/etc/php/5.6/cli/conf.d/30-mongo.ini" 
+  
+- name: Install git
+  apt:
+    name: git
+    state: installed
+- name: RecordManager code should exist
+  git:
+    repo: https://github.com/NatLibFi/RecordManager.git
+    dest: "{{ record_manager_dir }}"
+- name: RecordManager composer dependencies are present
+  composer:
+    command: install
+    working_dir: "{{ record_manager_dir }}"
+- name: datasources.ini template
+  template:
+    src: datasources.ini
+    dest: "{{ record_manager_dir }}/conf/datasources.ini"
+- name: recordmanager.ini template
+  template:
+    src: recordmanager.ini
+    dest: "{{ record_manager_dir }}/conf/recordmanager.ini"
+
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted

@@ -1,37 +1,17 @@
 version: "2"
 services:
-  # Add your containers here, specifying the base image you want to build from
-  # For example:
-  #
-  # web:
-  #   image: ubuntu:trusty
-  #   ports:
-  #     - "80:80"
-  #   command: ['/usr/bin/dumb-init', '/usr/sbin/apache2ctl', '-D', 'FOREGROUND']
-  #   dev_overrides:
-  #     environment:
-  #       - "DEBUG=1"
-  #
-  # mysql:
-  #   image: mysql
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     - MYSQL_DATABASE=vufind
-  #     - MYSQL_USER=vufind
-  #     - MYSQL_PASSWORD=vufind
-  #     - MYSQL_ROOT_PASSWORD=root
-  # vu-find
+  mongodb:
+    image: mongo
+    volumes:
+      - ${PWD}/mongosocket:/tmp
   vu-find:
     image: ubuntu:xenial
     ports:
       - 8080:8080
+    volumes:
+      - ${PWD}/mongosocket:/tmp/mongosocket
     command: /bin/bash
     tty: true
     stdin_open: true
 
 registries: {}
-  # Add optional registries used for deployment. For example:
-  #  google:
-  #    url: https://gcr.io
-  #    namespace: my-cool-project-xxxxxx   
