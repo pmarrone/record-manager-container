@@ -1,17 +1,24 @@
 version: "2"
 services:
+  mysql:    
+    image: mysql
+    ports:
+      - 3306:3306      
   mongodb:
     image: mongo
+    ports:
+      - 27017:27017
     volumes:
       - ${PWD}/mongosocket:/tmp
   vu-find:
     image: ubuntu:xenial
     ports:
-      - 8080:8080
+      - 8080:80
+      - 8081:8080
     volumes:
       - ${PWD}/mongosocket:/tmp/mongosocket
-    command: /bin/bash
+#    command: /bin/bash
+    command: bash -c "/usr/local/vu-find/solr.sh start; /usr/sbin/apache2ctl -D FOREGROUND"
     tty: true
     stdin_open: true
-
 registries: {}

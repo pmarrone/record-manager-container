@@ -9,42 +9,28 @@
     state: present
   notify:
     - restart apache2
-
-- name: RecordManager code should exist
-- name: Install pecl packages
-  pear:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - HTTP_Request2
-    - pecl/mongo
-- name: Copy mongo php ini file
-  template:
-    src: mongo.ini
-    dest: "/etc/php/5.6/cli/conf.d/30-mongo.ini" 
-  
-- name: Install git
-  apt:
-    name: git
-    state: installed
-- name: RecordManager code should exist
+- name: VU-find code should exist
   git:
-    repo: https://github.com/NatLibFi/RecordManager.git
-    dest: "{{ record_manager_dir }}"
-- name: RecordManager composer dependencies are present
+    repo: "https://github.com/vufind-org/vufind.git"
+    dest: "{{ vu_find_dir }}"
+    version: release-3.1
+- name: Install JDK
+  apt:
+    name: default-jdk
+    state: installed
+- name: Vu-find composer dependencies are present
   composer:
     command: install
-    working_dir: "{{ record_manager_dir }}"
-- name: datasources.ini template
-  template:
-    src: datasources.ini
-    dest: "{{ record_manager_dir }}/conf/datasources.ini"
-- name: recordmanager.ini template
-  template:
-    src: recordmanager.ini
-    dest: "{{ record_manager_dir }}/conf/recordmanager.ini"
-
-
-  handlers:
-    - name: restart apache2
-      service: name=apache2 state=restarted
+    working_dir: "{{ vu_find_dir }}"
+- name: Install vu-find
+  shell: php install.php --non-interactive
+  args:
+    chdir: "{{ vu_find_dir }}"
+- name: Enable apache vu-find configuration
+  file: 
+    src: "{{ vu_find_dir }}/local/httpd-vufind.conf"
+    dest: "/etc/apache2/conf-enabled/vufind.conf"
+- name: Set vu-find environment variables
+  template: 
+    src: vufind.sh
+    dest: "/etc/profile.d/vufind.sh"

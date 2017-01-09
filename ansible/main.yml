@@ -5,10 +5,10 @@
 # For many examples of roles, check out Ansible Galaxy: https://galaxy.ansible.com/
 #
 ---
-- hosts: vu-find
+- hosts: 
+   - vu-find
   strategy: debug
   gather_facts: false
   roles: 
     - recordmanager
     - vu-find
-    - mysql-server
