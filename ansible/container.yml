@@ -1,6 +1,11 @@
-version: "2"
+civersion: "2"
 services:
-  mysql:    
+  mysql:
+    environment:
+      MYSQL_DATABASE: vufind
+      MYSQL_USER: vufind 
+      MYSQL_PASSWORD: vufind
+      MYSQL_ROOT_PASSWORD: root
     image: mysql
     ports:
       - 3306:3306      
@@ -15,6 +20,9 @@ services:
     ports:
       - 8080:80
       - 8081:8080
+    links:
+      - mysql
+      - mongodb
     volumes:
       - ${PWD}/mongosocket:/tmp/mongosocket
 #    command: /bin/bash

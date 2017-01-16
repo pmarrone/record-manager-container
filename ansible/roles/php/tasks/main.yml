@@ -22,6 +22,8 @@
     - php5.6-mysql
     - php5.6-mbstring
     - php5.6-dev
+    - php5.6-gd
+    - php5.6-mcrypt
 - name: install composer
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   args:

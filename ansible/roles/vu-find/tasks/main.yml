@@ -34,3 +34,7 @@
   template: 
     src: vufind.sh
     dest: "/etc/profile.d/vufind.sh"
+- name: Set vu-find config
+  template: 
+    src: config.ini
+    dest: "{{ vu_find_dir }}/config/vufind/config.ini"
