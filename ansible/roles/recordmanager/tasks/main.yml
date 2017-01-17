@@ -34,8 +34,13 @@
 - name: datasources.ini template
   template:
     src: datasources.ini
-    dest: "{{ record_manager_dir }}/conf/datasources.ini"
-- name: recordmanager.ini template
+    dest: "{{ record_manager_dir }}/conf/"
+- name: Config templates
   template:
-    src: recordmanager.ini
-    dest: "{{ record_manager_dir }}/conf/recordmanager.ini"
+    src: "{{ item }}"
+    dest: "{{ record_manager_dir }}/conf/{{ item }}"
+  with_items:
+    - recordmanager.ini
+    - articles.lst
+    - abbreviations.lst
+    - datasources.ini
