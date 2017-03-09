@@ -1,30 +1,32 @@
-- name: Install curl
-  raw: apt-get update && apt-get -y install curl
-- name: Install python
-  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-- name: Setup php PPA
-  apt_repository:
-    repo: 'ppa:ondrej/php'
-    state: present
-- name: Install php
-  apt: 
-    name: php5.6
-    state: installed
-- name: Install php modules
-  apt: 
-    name: '{{ item }}'
-    state: installed
-  with_items:
-    - php5.6-curl
-    - php5.6-xml
-    - php5.6-intl
-    - php5.6-json
-    - php5.6-mysql
-    - php5.6-mbstring
-    - php5.6-dev
-    - php5.6-gd
-    - php5.6-mcrypt
-- name: install composer
-  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-  args:
-    creates: /usr/local/bin/composer
+- block:
+  - name: Install curl
+    raw: apt-get update && apt-get -y install curl
+  - name: Install python
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  - name: Setup php PPA
+    apt_repository:
+      repo: 'ppa:ondrej/php'
+      state: present
+  - name: Install php
+    apt: 
+      name: php5.6
+      state: installed
+  - name: Install php modules
+    apt: 
+      name: '{{ item }}'
+      state: installed
+    with_items:
+      - php5.6-curl
+      - php5.6-xml
+      - php5.6-intl
+      - php5.6-json
+      - php5.6-mysql
+      - php5.6-mbstring
+      - php5.6-dev
+      - php5.6-gd
+      - php5.6-mcrypt
+  - name: install composer
+    shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    args:
+      creates: /usr/local/bin/composer
+  become: true
