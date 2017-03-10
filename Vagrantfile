@@ -17,7 +17,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.groups = {
-      "vu-find" => ["default"]
+      "vu-find" => ["default"],
+      "mysql" => ["default"]
     }
     ansible.playbook = "ansible/main.yml"
   end

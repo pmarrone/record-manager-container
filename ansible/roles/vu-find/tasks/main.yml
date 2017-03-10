@@ -1,51 +1,56 @@
 ---
-- name: Install apache2
-  apt:
-    name: apache2
-    state: installed
-- name: enabled mod_rewrite
-  apache2_module:
-    name: rewrite
-    state: present
-  notify:
-    - restart apache2
-- name: VU-find code should exist
-  git:
-    repo: "https://github.com/vufind-org/vufind.git"
-    dest: "{{ vu_find_dir }}"
-    version: release-3.1
-    force: yes
-- name: Install JDK
-  apt:
-    name: default-jdk
-    state: installed
-- name: Vu-find composer dependencies are present
-  composer:
-    command: install
-    working_dir: "{{ vu_find_dir }}"
-- name: Install vu-find
-  shell: php install.php --non-interactive
-  args:
-    chdir: "{{ vu_find_dir }}"
-- name: Enable apache vu-find configuration
-  file: 
-    src: "{{ vu_find_dir }}/local/httpd-vufind.conf"
-    dest: "/etc/apache2/conf-enabled/vufind.conf"
-    state: link
-- name: Set vu-find environment variables
-  template: 
-    src: vufind.sh
-    dest: "/etc/profile.d/vufind.sh"
-- name: Set vu-find config
-  template: 
-    src: config.ini
-    dest: "{{ vu_find_dir }}/config/vufind/config.ini"
-- name: "Give vu-find permissions on its files"
-  file:
-    path: "{{ item }}"
-    owner: www-data
-    group: www-data
-    recurse: yes
-  with_items:
-    - "{{ vu_find_dir }}/local/cache/"
-    - "{{ vu_find_dir }}/local/config/vufind"
+- block:
+  - name: Install apache2
+    apt:
+      name: apache2
+      state: installed
+  - name: enabled mod_rewrite
+    apache2_module:
+      name: rewrite
+      state: present
+    notify:
+      - restart apache2
+  - name: VU-find code should exist
+    git:
+      repo: "https://github.com/vufind-org/vufind.git"
+      dest: "{{ vu_find_dir }}"
+      version: release-3.1
+      force: yes
+  - name: Install JDK
+    apt:
+      name: default-jdk
+      state: installed
+  - name: Vu-find composer dependencies are present
+    composer:
+      command: install
+      working_dir: "{{ vu_find_dir }}"
+  - name: Install vu-find
+    shell: php install.php --non-interactive
+    args:
+      chdir: "{{ vu_find_dir }}"
+  - name: Enable apache vu-find configuration
+    file: 
+      src: "{{ vu_find_dir }}/local/httpd-vufind.conf"
+      dest: "/etc/apache2/conf-enabled/vufind.conf"
+      state: link
+  - name: Set vu-find environment variables
+    template: 
+      src: vufind.sh
+      dest: "/etc/profile.d/vufind.sh"
+  - name: Set vu-find config
+    template: 
+      src: config.ini
+      dest: "{{ vu_find_dir }}/config/vufind/config.ini"
+  - name: "Give vu-find permissions on its files"
+    file:
+      path: "{{ item }}"
+      owner: www-data
+      group: www-data
+      recurse: yes
+    with_items:
+      - "{{ vu_find_dir }}/local/cache/"
+      - "{{ vu_find_dir }}/local/config/vufind"
+  - name: 'Set vufind hostname'
+    hostname:
+      name: vufind
+  become: true

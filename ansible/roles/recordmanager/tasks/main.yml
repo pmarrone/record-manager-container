@@ -1,50 +1,56 @@
+
 #Record Manager installation tasks
 ---
-- name: Install pkg-config (so that we can compile mongo with pecl)
-  apt:
-    name: pkg-config
-    state: installed
-- name: Install pear & pecl packages
-  pear:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - HTTP_Request2
-    - pecl/mongodb
-- name: Copy mongo php ini file
-  template:
-    src: mongo.ini
-    dest: "/etc/php/5.6/cli/conf.d/30-mongo.ini" 
-- name: Install git
-  apt:
-    name: git
-    state: installed
-- name: RecordManager code should exist
-  git:
-    repo: https://github.com/NatLibFi/RecordManager.git
-    dest: "{{ record_manager_dir }}"
-- name: lsof must be installed for Solr script to work properly
-  apt:
-    name: lsof
-    state: installed
-- name: zip should be installed for composer to work properly
-  apt:
-    name: zip
-    state: installed
-- name: RecordManager composer dependencies are present
-  composer:
-    command: install
-    working_dir: "{{ record_manager_dir }}"
-- name: datasources.ini template
-  template:
-    src: datasources.ini
-    dest: "{{ record_manager_dir }}/conf/"
-- name: Config templates
-  template:
-    src: "{{ item }}"
-    dest: "{{ record_manager_dir }}/conf/{{ item }}"
-  with_items:
-    - recordmanager.ini
-    - articles.lst
-    - abbreviations.lst
-    - datasources.ini
+- block:
+  - name: Install pkg-config (so that we can compile mongo with pecl)
+    apt:
+      name: pkg-config
+      state: installed
+  - name: Install pear & pecl packages
+    pear:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - HTTP_Request2
+      - pecl/mongodb
+  - name: Copy mongo php ini file
+    template:
+      src: mongo.ini
+      dest: "/etc/php/5.6/cli/conf.d/30-mongo.ini"
+    become: true
+
+  - name: Install git
+    apt:
+      name: git
+      state: installed
+
+  - name: lsof must be installed for Solr script to work properly
+    apt:
+      name: lsof
+      state: installed
+  - name: zip should be installed for composer to work properly
+    apt:
+      name: zip
+      state: installed
+  - name: RecordManager code should exist
+    git:
+      repo: https://github.com/NatLibFi/RecordManager.git
+      dest: "{{ record_manager_dir }}"
+  - name: RecordManager composer dependencies are present
+    composer:
+      command: install
+      working_dir: "{{ record_manager_dir }}"
+  - name: datasources.ini template
+    template:
+      src: datasources.ini
+      dest: "{{ record_manager_dir }}/conf/"
+  - name: Config templates
+    template:
+      src: "{{ item }}"
+      dest: "{{ record_manager_dir }}/conf/{{ item }}"
+    with_items:
+      - recordmanager.ini
+      - articles.lst
+      - abbreviations.lst
+      - datasources.ini
+  become: true
