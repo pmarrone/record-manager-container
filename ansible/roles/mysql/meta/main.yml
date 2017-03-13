@@ -1,2 +1,3 @@
 dependencies:
-  - geerlingguy.mysql
+  - role: geerlingguy.mysql
+    become: yes

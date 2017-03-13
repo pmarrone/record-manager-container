@@ -1,0 +1,7 @@
+database_name: vufind
+database_password: vufind
+database_user: vufind
+database_host: localhost
+
+database_root_user: root
+database_root_password: root

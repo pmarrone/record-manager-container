@@ -2,3 +2,6 @@ record_manager_dir: /usr/local/RecordManager
 #The default configuration expects a unix socket shared via volumes with the 
 #mongo container in the /tmp/mongosocket folder
 mongo_url: 'mongodb:///tmp/mongosocket/mongodb-27017.sock'
+
+database_host: localhost
+database_connection: 'mysql://{{ database_host }}:vufind@mysql/vufind'

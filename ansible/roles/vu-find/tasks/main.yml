@@ -33,6 +33,8 @@
       src: "{{ vu_find_dir }}/local/httpd-vufind.conf"
       dest: "/etc/apache2/conf-enabled/vufind.conf"
       state: link
+    notify:
+      - restart apache2
   - name: Set vu-find environment variables
     template: 
       src: vufind.sh
@@ -54,3 +56,5 @@
     hostname:
       name: vufind
   become: true
+  
+- include: database.yml

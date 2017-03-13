@@ -1,5 +1,6 @@
-CREATE DATABASE vufind;
-GRANT SELECT,INSERT,UPDATE,DELETE ON vufind.* TO 'vufind'@'localhost' IDENTIFIED BY 'vufind' WITH GRANT OPTION;
+CREATE DATABASE IF NOT EXISTS {{ database_name }};
+USE vufind;
+GRANT SELECT,INSERT,UPDATE,DELETE ON {{ database_name }}.* TO '{{ database_user }}'@'localhost' IDENTIFIED BY '{{ database_password }}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;

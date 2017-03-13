@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
       "mysql" => ["default"]
     }
     ansible.playbook = "ansible/main.yml"
+    ansible.verbose = "vv"
   end
 
   # Disable automatic box update checking. If you disable this, then

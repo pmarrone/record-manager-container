@@ -5,6 +5,12 @@
 # For many examples of roles, check out Ansible Galaxy: https://galaxy.ansible.com/
 #
 ---
+- hosts:
+    - mysql
+  roles:
+    - mysql
+  vars_files:
+    - vars/default.yml
 - hosts: 
    - vu-find
   strategy: debug
@@ -12,3 +18,5 @@
   roles: 
     - recordmanager
     - vu-find
+  vars_files:
+    - vars/default.yml

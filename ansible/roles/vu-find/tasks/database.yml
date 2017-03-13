@@ -1,0 +1,21 @@
+- name: Clean database
+  mysql_db:
+    name: "{{ database_name }}"
+    state: absent
+    login_host: "{{ database_host }}"
+    login_password: "{{ database_root_password }}"
+    login_user: "{{ database_root_user }}"
+
+- name: Copy database dump file
+  template:
+    src: db.sql
+    dest: /tmp/db.sql
+    
+- name: Restore database
+  mysql_db:
+    name: "{{ database_name }}"
+    state: import
+    target: /tmp/db.sql
+    login_host: "{{ database_host }}"
+    login_password: "{{ database_root_password }}"
+    login_user: "{{ database_root_user }}"

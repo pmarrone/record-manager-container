@@ -1,0 +1,14 @@
+mysql_user_home: /root
+mysql_user_name: "{{ database_root_user }}"
+mysql_user_password: "{{ database_root_password }}"
+
+mysql_databases:
+  - name: vufind
+    state: present
+    
+mysql_users:
+  - name: vufind
+    host: localhost
+    password: vufind
+    priv: 'vufind.*:ALL'
+    state: present
