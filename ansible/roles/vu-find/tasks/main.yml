@@ -24,6 +24,7 @@
     composer:
       command: install
       working_dir: "{{ vu_find_dir }}"
+    tags: composer
   - name: Install vu-find
     shell: php install.php --non-interactive
     args:
@@ -58,3 +59,5 @@
   become: true
   
 - include: database.yml
+- include: solr.yml
+- include: harvest.yml

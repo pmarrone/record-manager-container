@@ -1,0 +1,6 @@
+- block:
+  - name: 'Start Solr'
+    shell: '{{ vu_find_dir }}/solr.sh restart'
+  tags:
+    - solr
+  become: true

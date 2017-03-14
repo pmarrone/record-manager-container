@@ -1,3 +1,3 @@
-export JAVA_HOME="/usr/lib/jvm/java-7-oracle"
-export VUFIND_HOME="/usr/local/vufind/"
-export VUFIND_LOCAL_DIR="/usr/local/vufind/local"
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export VUFIND_HOME="{{ vu_find_dir }}"
+export VUFIND_LOCAL_DIR="{{ vu_find_dir }}/local"

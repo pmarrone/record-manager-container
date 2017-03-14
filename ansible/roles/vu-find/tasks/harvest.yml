@@ -1,0 +1,8 @@
+- block:
+  - name: Set oai config
+    template: 
+      src: oai.ini
+      dest: "{{ vu_find_dir }}/harvest/oai.ini"
+  tags:
+    - harvest
+  become: true

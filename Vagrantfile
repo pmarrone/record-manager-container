@@ -23,6 +23,11 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/main.yml"
     ansible.verbose = "vv"
   end
+  
+  config.vm.provider "virtualbox" do |virtualbox|
+    virtualbox.memory = 2048
+    virtualbox.cpus = 2
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
