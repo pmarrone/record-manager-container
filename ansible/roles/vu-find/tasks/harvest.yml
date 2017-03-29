@@ -3,6 +3,15 @@
     template: 
       src: oai.ini
       dest: "{{ vu_find_dir }}/harvest/oai.ini"
+  - name: Create import files
+    template: 
+      src: source.properties
+      dest: "{{ vu_find_dir }}/local/import/{{ item.name }}.properties"
+    with_items: "{{ sources.koha  }}"
+  - template: 
+      src: source_import.properties
+      dest: "{{ vu_find_dir }}/local/import/{{ item.name }}_import.properties"
+    with_items: "{{ sources.koha  }}"
   tags:
     - harvest
   become: true

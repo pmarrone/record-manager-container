@@ -1,0 +1,87 @@
+defaults:
+  institution: "Universidad Nacional de Córdoba"
+sources:
+  koha:
+    - description: Biblioteca Mayor
+      url: http://bmayor.biblio.unc.edu.ar/
+      name: mayor
+    - description: Facultad de Arquitectura, Urbanismo y Diseño
+      url: http://faud.biblio.unc.edu.ar/
+      name: arquitectura
+    - description: Biblioteca J. M. Aricó
+      url: http://arico.biblio.unc.edu.ar/
+      name: jose_arico
+    - description: Cs. Exactas (Centro)
+      url: http://efncentro.biblio.unc.edu.ar/
+      name: exactas
+    - description: Ciencias Químicas
+      url: http://fcq.biblio.unc.edu.ar/
+      name: quimicas
+    - description: Enfermería
+      url: http://enfermeria.biblio.unc.edu.ar
+      name: enfermeria
+    - description: Observatorio Astronómico Córdoba
+      url: http://biblio.oac.uncor.edu/
+      name: observatorio_astronomico
+    - description: Colegio Nacional de Monserrat
+      url: http://monserrat.biblio.unc.edu.ar/
+      name: monserrat
+    - description: Escuela de Salud Pública
+      url: http://saludpublica.biblio.unc.edu.ar/
+      name: salud_publica
+    - description: Cs. Agropecuarias
+      url: http://agro.biblio.unc.edu.ar/
+      name: agropecuarias
+    - description: Derecho y Cs. Sociales
+      url: http://derecho.biblio.unc.edu.ar/
+      name: derecho
+    - description: CEA
+      url: http://cea.biblio.unc.edu.ar/
+      name: cea
+    - description: Facultad de Artes
+      url: http://artes.biblio.unc.edu.ar/
+      name: artes
+    - description: Medicina
+      url: http://fcm.biblio.unc.edu.ar/
+      name: medicina
+    - description: Escuela de Trabajo Social
+      url: http://ets.biblio.unc.edu.ar/
+      name: trabajo_social
+    - description: Museo de antropología (FFyH)
+      url: http://museoantropologia.biblio.unc.edu.ar/
+      name: museo_antropologia
+    - description: Filosofía y Humanidades / Psicología
+      url: http://ffyh.biblio.unc.edu.ar/
+      name: ffyh
+    - description: Cs. Económicas
+      url: http://eco.biblio.unc.edu.ar/
+      name: economicas
+    - description: Facultad de Comunicación Social
+      url: http://eci.biblio.unc.edu.ar/
+      name: ciencias_informacion
+    - description: FAMAF
+      url: http://famaf.biblio.unc.edu.ar/
+      name: famaf
+    - description: Facultad de Lenguas
+      url: http://lenguas.biblio.unc.edu.ar/
+      name: lenguas
+    - description: Facultad de Odontología
+      url: http://odo.biblio.unc.edu.ar/
+      name: odontologia
+    - description: Escuela Superior de Comercio Manuel Belgrano
+      url: http://belgrano.biblio.unc.edu.ar/
+      name: manuel_belgrano
+    - description: Escuela de Nutrición
+      url: http://nutricion.biblio.unc.edu.ar/
+      name: nutricion
+  ojs:
+    - url: http://revistas.unc.edu.ar
+      name: revistas.unc.edu.ar
+      id_search: www.revistas.unc.edu.ar
+      id_replace: revistas-unc-
+  dspace:
+    - url: http://rdu.unc.edu.ar
+      name: rdu.unc.edu.ar
+      id_search: rdu.unc.edu.ar
+      handle_prefix: 11086
+      id_replace: rdu-unc-
