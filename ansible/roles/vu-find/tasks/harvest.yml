@@ -12,6 +12,12 @@
       src: source_import.properties
       dest: "{{ vu_find_dir }}/local/import/{{ item.name }}_import.properties"
     with_items: "{{ sources.koha  }}"
+  - template: 
+      src: marc_local.properties
+      dest: "{{ vu_find_dir }}/local/import/marc_local.properties"
+  - template: 
+      src: import-sources.sh
+      dest: "{{ vu_find_dir }}/harvest/import-sources.sh"
   tags:
     - harvest
   become: true
