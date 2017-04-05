@@ -1,0 +1,4 @@
+ansible/.vagrant
+.vagrant
+ansible/main.retry
+inventory
